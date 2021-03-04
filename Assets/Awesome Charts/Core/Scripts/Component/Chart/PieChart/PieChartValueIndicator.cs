@@ -21,6 +21,8 @@ namespace AwesomeCharts {
         [SerializeField]
         private Boolean reversedLabel = false;
 
+        public ChartLabel labelPrafab;
+
         public String Label {
             get { return label; }
             set {
@@ -61,7 +63,7 @@ namespace AwesomeCharts {
             }
         }
 
-        private Text labelText;
+        private ChartLabel labelText;
         private UILineRenderer lineRenderer;
 
         private Boolean isDirty = true;
@@ -90,7 +92,7 @@ namespace AwesomeCharts {
         }
 
         private void InstantiateViews () {
-            labelText = viewCreator.InstantiateText ("label", transform, PivotValue.MIDDLE_LEFT);
+            labelText = viewCreator.InstantiateWithPrefab<ChartLabel> (labelPrafab , transform);
             labelText.GetComponent<RectTransform> ().anchorMin = new Vector2 (0.5f, 0.5f);
             labelText.GetComponent<RectTransform> ().anchorMax = new Vector2 (0.5f, 0.5f);
             labelText.GetComponent<RectTransform> ().sizeDelta = new Vector2 (300f, 40f);
@@ -117,18 +119,18 @@ namespace AwesomeCharts {
                 return;
             }
 
-            labelText.text = Label;
-            labelText.color = IndicatorColor;
-            labelText.fontSize = FontSize;
+            labelText.SetLabelText(Label);
+            labelText.SetLabelColor(IndicatorColor);
+            labelText.SetLabelTextSize(FontSize);
 
             lineRenderer.Points = LinePoints.ToArray ();
             lineRenderer.color = IndicatorColor;
 
             if (ReversedLabel) {
-                labelText.alignment = TextAnchor.MiddleRight;
+                labelText.SetLabelTextAlignment(TextAnchor.MiddleRight);
                 labelText.GetComponent<RectTransform> ().pivot = PivotValue.MIDDLE_RIGHT;
             } else {
-                labelText.alignment = TextAnchor.MiddleLeft;
+                labelText.SetLabelTextAlignment(TextAnchor.MiddleLeft);
                 labelText.GetComponent<RectTransform> ().pivot = PivotValue.MIDDLE_LEFT;
             }
         }

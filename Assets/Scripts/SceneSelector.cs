@@ -49,15 +49,11 @@ public class SceneSelector : MonoBehaviour
                 sceneName = "高所";
                 break;
             case 6:
-                sceneName = "大規模スピーチ";
+                sceneName = "スピーチ";
                 break;
             case 7:
-                sceneName = "小規模スピーチ";
-                break;
-            case 8:
                 sceneName = "面接";
                 break;
-
         }
     }
 

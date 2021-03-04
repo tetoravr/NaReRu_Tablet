@@ -7,6 +7,7 @@ namespace AwesomeCharts {
 
         private GameObject CreateBaseGameObject (string name, Transform parent, Vector2 pivot) {
             GameObject gameObject = new GameObject (name);
+            gameObject.AddComponent<CanvasRenderer>();
             gameObject.transform.SetParent (parent, false);
             gameObject.hideFlags = HideFlags.DontSave |
                 HideFlags.HideInHierarchy |
@@ -30,7 +31,6 @@ namespace AwesomeCharts {
 
         public ScrollRect InstantiateScroll (string name, Transform parent, Vector2 pivot) {
             GameObject scrollGameObject = CreateBaseGameObject (name, parent, pivot);
-            scrollGameObject.AddComponent<CanvasRenderer> ();
             ScrollRect scrollRect = scrollGameObject.AddComponent<ScrollRect> ();
 
             scrollRect.viewport = InstantiateViewPort (scrollGameObject.transform);
@@ -51,15 +51,11 @@ namespace AwesomeCharts {
 
         public GameObject InstantiateContentView (Transform parent) {
             GameObject content = CreateBaseGameObject ("Content", parent, PivotValue.BOTTOM_LEFT);
-            content.AddComponent<CanvasRenderer> ();
-
             return content;
         }
 
         public GameObject InstantiateChartDataContainerView (Transform parent) {
             GameObject content = CreateBaseGameObject ("DataContent", parent, PivotValue.BOTTOM_LEFT);
-            content.AddComponent<CanvasRenderer> ();
-
             return content;
         }
 
@@ -129,8 +125,8 @@ namespace AwesomeCharts {
             return popup;
         }
 
-        public LegendEntryView InstantiateLegendEntry (Transform parent, Vector2 pivot) {
-            LegendEntryView entry = InstantiateWithPrefab (Resources.Load<LegendEntryView> ("prefabs/LegendEntryView"), parent);
+        public LegendEntryView InstantiateLegendEntry (LegendEntryView prefab, Transform parent, Vector2 pivot) {
+            LegendEntryView entry = InstantiateWithPrefab (prefab ?? Resources.Load<LegendEntryView> ("prefabs/LegendEntryView"), parent);
             RectTransform transform = entry.GetComponent<RectTransform> ();
             transform.pivot = pivot;
             transform.anchorMin = new Vector2 (0, 0);
@@ -162,9 +158,10 @@ namespace AwesomeCharts {
             return gameObject.gameObject;
         }
 
-        public PieChartValueIndicator InstantiatePieEntryValueIndicator (string name, Transform parent, Vector2 pivot) {
+        public PieChartValueIndicator InstantiatePieEntryValueIndicator (ChartLabel labelPrafab, string name, Transform parent, Vector2 pivot) {
             PieChartValueIndicator indicatorView = CreateBaseGameObject (name, parent, pivot)
                 .AddComponent<PieChartValueIndicator> ();
+            indicatorView.labelPrafab = labelPrafab ?? Resources.Load<ChartLabel> ("prefabs/PieChartIndicatorLabelPrafab");
             indicatorView.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1f, 1f);
             indicatorView.GetComponent<RectTransform> ().anchorMin = new Vector2 (0.5f, 0.5f);
             indicatorView.GetComponent<RectTransform> ().anchorMax = new Vector2 (0.5f, 0.5f);

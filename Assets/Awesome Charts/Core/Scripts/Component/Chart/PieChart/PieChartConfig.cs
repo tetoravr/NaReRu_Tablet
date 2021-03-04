@@ -24,6 +24,8 @@ namespace AwesomeCharts {
         private Color valueIndicatorColor = Color.white;
         [SerializeField]
         private ValueIndicatorVisibilityMode valueIndicatorVisibility = ValueIndicatorVisibilityMode.ONLY_SELECTED;
+        [SerializeField]
+        private ChartLabel valueLabelPrefab;
 
         public ConfigChangeListener configChangeListener;
 
@@ -63,6 +65,14 @@ namespace AwesomeCharts {
             get { return valueIndicatorVisibility; }
             set {
                 valueIndicatorVisibility = value;
+                OnConfigChanged ();
+            }
+        }
+
+        public ChartLabel ValueLabelPrefab {
+            get { return valueLabelPrefab; }
+            set {
+                valueLabelPrefab = value;
                 OnConfigChanged ();
             }
         }

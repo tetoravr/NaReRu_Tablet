@@ -45,18 +45,7 @@ namespace AwesomeCharts {
         }
 
         protected virtual void Start () {
-            RemoveDeprecatedContentView ();
             InstantiateContentViews ();
-        }
-
-        /* This method should execute only once for old saved scenes.
-        Child management has changed in version 1.1.2, and this method is necessary to maintain compatibility*/
-        private void RemoveDeprecatedContentView () {
-            foreach (Transform child in transform) {
-                if (child.gameObject.name.Equals ("Content")) {
-                    DestroyDelayed (child.gameObject);
-                }
-            }
         }
 
         private void InstantiateContentViews () {

@@ -5,7 +5,7 @@ namespace AwesomeCharts {
     [ExecuteInEditMode]
     public class LegendEntryView : MonoBehaviour {
 
-        public Text nameText;
+        public ChartLabel nameLabel;
         public Image iconImage;
 
         [SerializeField]
@@ -54,12 +54,12 @@ namespace AwesomeCharts {
         }
 
         private void UpdatePositionsAndSizes() {
-            if (iconImage == null || nameText == null)
+            if (iconImage == null || nameLabel == null)
                 return;
 
             RectTransform viewTransform = GetComponent<RectTransform>();
             RectTransform iconTransform = iconImage.GetComponent<RectTransform>();
-            RectTransform titleTransform = nameText.GetComponent<RectTransform>();
+            RectTransform titleTransform = nameLabel.GetComponent<RectTransform>();
 
             iconTransform.sizeDelta = new Vector2(IconSize, IconSize);
             titleTransform.sizeDelta = new Vector2(viewTransform.sizeDelta.x - IconSize - IconSpacing,

@@ -10,11 +10,9 @@ namespace UnityEngine.UI.Extensions
         PerLine
     }
 
-    [RequireComponent(typeof(CanvasRenderer))]
     public class UIPrimitiveBase : MaskableGraphic, ILayoutElement, ICanvasRaycastFilter
     {
         static protected Material s_ETC1DefaultUI = null;
-        List<Vector2> outputList = new List<Vector2>();
 
         [SerializeField] private Sprite m_Sprite;
         public Sprite sprite { get { return m_Sprite; } set { if (SetPropertyUtility.SetClass(ref m_Sprite, value)) GeneratedUVs(); SetAllDirty(); } }
@@ -35,7 +33,7 @@ namespace UnityEngine.UI.Extensions
 
         [SerializeField]
         protected float m_Resolution;
-        public float Resolution { get { return m_Resolution; } set { m_Resolution = value; SetAllDirty(); } }
+        public float Resoloution { get { return m_Resolution; } set { m_Resolution = value; SetAllDirty(); } }
 
         [SerializeField]
         private bool m_useNativeSize;
@@ -149,32 +147,27 @@ namespace UnityEngine.UI.Extensions
 
         protected Vector2[] IncreaseResolution(Vector2[] input)
         {
-            return IncreaseResolution(new List<Vector2>(input)).ToArray();
-        }
-
-        protected List<Vector2> IncreaseResolution(List<Vector2> input)
-        {
-            outputList.Clear();
+            var outputList = new List<Vector2>();
 
             switch (ImproveResolution)
             {
                 case ResolutionMode.PerLine:
                     float totalDistance = 0, increments = 0;
-                    for (int i = 0; i < input.Count - 1; i++)
+                    for (int i = 0; i < input.Length - 1; i++)
                     {
                         totalDistance += Vector2.Distance(input[i], input[i + 1]);
                     }
                     ResolutionToNativeSize(totalDistance);
                     increments = totalDistance / m_Resolution;
                     var incrementCount = 0;
-                    for (int i = 0; i < input.Count - 1; i++)
+                    for (int i = 0; i < input.Length - 1; i++)
                     {
                         var p1 = input[i];
                         outputList.Add(p1);
                         var p2 = input[i + 1];
                         var segmentDistance = Vector2.Distance(p1, p2) / increments;
                         var incrementTime = 1f / segmentDistance;
-                        for (int j = 0; j < segmentDistance; j++)
+                        for (int j=0; j < segmentDistance; j++)
                         {
                             outputList.Add(Vector2.Lerp(p1, (Vector2)p2, j * incrementTime));
                             incrementCount++;
@@ -183,7 +176,7 @@ namespace UnityEngine.UI.Extensions
                     }
                     break;
                 case ResolutionMode.PerSegment:
-                    for (int i = 0; i < input.Count - 1; i++)
+                    for (int i = 0; i < input.Length - 1; i++)
                     {
                         var p1 = input[i];
                         outputList.Add(p1);
@@ -198,7 +191,7 @@ namespace UnityEngine.UI.Extensions
                     }
                     break;
             }
-            return outputList;
+            return outputList.ToArray();
         }
 
         protected virtual void GeneratedUVs() { }
@@ -288,7 +281,7 @@ namespace UnityEngine.UI.Extensions
 
         /// <summary>
         /// Return image adjusted position
-        /// **Copied from Unity's Image component for now and simplified for UI Extensions primitives
+        /// **Copied from Unity's Image component for now and simplified for UI Extensions primatives
         /// </summary>
         /// <param name="local"></param>
         /// <param name="rect"></param>
@@ -336,7 +329,7 @@ namespace UnityEngine.UI.Extensions
             for (int axis = 0; axis <= 1; axis++)
             {
                 // If the rect is smaller than the combined borders, then there's not room for the borders at their normal size.
-                // In order to avoid artefact's with overlapping borders, we scale the borders down to fit.
+                // In order to avoid artefacts with overlapping borders, we scale the borders down to fit.
                 float combinedBorders = border[axis] + border[axis + 2];
                 if (rect.size[axis] < combinedBorders && combinedBorders != 0)
                 {

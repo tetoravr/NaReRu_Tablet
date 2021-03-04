@@ -7,7 +7,7 @@ namespace AwesomeCharts {
     public class AxisLabelRenderer : ACMonoBehaviour {
 
         [SerializeField]
-        private AxisLabel objectPrefab;
+        private ChartLabel objectPrefab;
         [SerializeField]
         private AxisLabelConfig labelsConfig;
         [SerializeField]
@@ -31,7 +31,7 @@ namespace AwesomeCharts {
             labelsDirty = true;
         }
 
-        public AxisLabel ObjectPrefab {
+        public ChartLabel ObjectPrefab {
             set { objectPrefab = value; }
             get { return objectPrefab; }
         }
@@ -60,8 +60,8 @@ namespace AwesomeCharts {
             return Entries != null? Entries.Count : 0;
         }
 
-        private AxisLabel GetLabelAt (int index) {
-            return objectsPool.GetReusableObject (index).GetComponent<AxisLabel> ();
+        private ChartLabel GetLabelAt (int index) {
+            return objectsPool.GetReusableObject (index).GetComponent<ChartLabel> ();
         }
 
         public void Reload () {
@@ -102,23 +102,17 @@ namespace AwesomeCharts {
             });
         }
 
-        private void UpdateLabel (AxisLabel label,
+        private void UpdateLabel (ChartLabel label,
             AxisLabelConfig config,
             AxisLabelRendererExtry entry,
             Vector2 rendererSize) {
 
-                label.SetLabelColor(config.LabelColor);
-                label.SetLabelTextSize(config.LabelSize);
-                label.SetLabelTextAlignment(GetLabelAlignment(entry));
-                label.SetLabelText(entry.Text);
-                label.GetComponent<RectTransform>().pivot = GetLabelPivot(entry);
-
-
-                var entryPos = CreateLabelPositionForEntry(entry, rendererSize, config.LabelMargin);
-
-                if (!float.IsNaN(entryPos.x)) {
-                    label.transform.localPosition = entryPos;
-                }
+            label.SetLabelColor (config.LabelColor);
+            label.SetLabelTextSize (config.LabelSize);
+            label.SetLabelTextAlignment (GetLabelAlignment (entry));
+            label.SetLabelText (entry.Text);
+            label.GetComponent<RectTransform> ().pivot = GetLabelPivot (entry);
+            label.transform.localPosition = CreateLabelPositionForEntry (entry, rendererSize, config.LabelMargin);
         }
 
         private Vector2 CreateLabelPositionForEntry (AxisLabelRendererExtry entry, Vector2 rendererSize, float margin) {

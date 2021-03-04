@@ -143,7 +143,8 @@ namespace AwesomeCharts {
         }
 
         private PieChartValueIndicator CreateValueIndicatorView () {
-            return viewCreator.InstantiatePieEntryValueIndicator ("Pie entry value indicator",
+            return viewCreator.InstantiatePieEntryValueIndicator (config.ValueLabelPrefab,
+                "Pie entry value indicator",
                 contentView.transform,
                 PivotValue.CENTER);
         }

@@ -11,10 +11,8 @@ namespace AwesomeCharts {
         private Color labelColor = Defaults.AXIS_LABEL_COLOR;
         [SerializeField]
         private float labelMargin = Defaults.AXIS_LABEL_MARGIN;
-        [SerializeField]
-        private Font labelFont;
-        [SerializeField]
-        private FontStyle labelFontStyle;
+
+        private Font defaultFont;
 
         public int LabelSize {
             get { return labelSize; }
@@ -29,16 +27,6 @@ namespace AwesomeCharts {
         public float LabelMargin {
             get { return labelMargin; }
             set { labelMargin = value; }
-        }
-
-        public Font LabelFont {
-            get { return labelFont; }
-            set { labelFont = value; }
-        }
-
-        public FontStyle LabelFontStyle {
-            get { return labelFontStyle; }
-            set { labelFontStyle = value; }
         }
     }
 }

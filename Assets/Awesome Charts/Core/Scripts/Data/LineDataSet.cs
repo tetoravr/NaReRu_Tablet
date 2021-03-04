@@ -42,33 +42,37 @@ namespace AwesomeCharts {
             set { useBezier = value; }
         }
 
-        public LineDataSet() : this("") { }
+        public LineDataSet () : this ("") { }
 
-        public LineDataSet(string title) : base(title) { }
+        public LineDataSet (string title) : base (title) { }
 
-        public LineDataSet(string title, List<LineEntry> entries) : base(title, entries) { }
+        public LineDataSet (string title, List<LineEntry> entries) : base (title, entries) { }
 
-        public float GetMaxPosition() {
+        public float GetMaxPosition () {
             if (Entries == null || Entries.Count == 0)
                 return 0;
+            else if (Entries.Count == 1)
+                return Mathf.Max (0f, Entries[0].Position);
 
-            List<LineEntry> sortedEntries = Entries.OrderByDescending(a => a.Position).ToList();
+            List<LineEntry> sortedEntries = Entries.OrderByDescending (a => a.Position).ToList ();
 
             return sortedEntries[0].Position;
         }
 
-        public float GetMinPosition() {
+        public float GetMinPosition () {
             if (Entries == null || Entries.Count == 0)
                 return 0;
+            else if (Entries.Count == 1)
+                return Mathf.Min (0f, Entries[0].Position);
 
-            List<LineEntry> sortedEntries = Entries.OrderBy(a => a.Position).ToList();
+            List<LineEntry> sortedEntries = Entries.OrderBy (a => a.Position).ToList ();
 
             return sortedEntries[0].Position;
         }
 
-        public float PositionDelta() {
+        public float PositionDelta () {
             float result = 0;
-            List<LineEntry> sortedEntries = GetSortedEntries();
+            List<LineEntry> sortedEntries = GetSortedEntries ();
             if (Entries.Count > 1) {
                 result = sortedEntries[sortedEntries.Count - 1].Position - sortedEntries[0].Position;
             }
@@ -76,10 +80,10 @@ namespace AwesomeCharts {
             return result;
         }
 
-        public override List<LineEntry> GetSortedEntries() {
+        public override List<LineEntry> GetSortedEntries () {
             return Entries
-                .OrderBy(entry => entry.Position)
-                .ToList();
+                .OrderBy (entry => entry.Position)
+                .ToList ();
         }
     }
 }

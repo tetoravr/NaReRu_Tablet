@@ -108,7 +108,9 @@ namespace AwesomeCharts {
 
         protected override void OnInstantiateViews () {
             base.OnInstantiateViews ();
-            chartDataContainerView.AddComponent<RectMask2D> ();
+            chartDataContainerView.AddComponent<Image> ();
+            var mask = chartDataContainerView.AddComponent<Mask> ();
+            mask.showMaskGraphic = false;
         }
 
         protected override AxisLabelEntryProvider GetVerticalAxisEntriesProvider () {
@@ -294,7 +296,7 @@ namespace AwesomeCharts {
         }
 
         private Vector2[] CreateLinePointsFromDataSet (LineDataSet dataSet) {
-            if (dataSet.GetEntriesCount () < 2 || dataSet.PositionDelta () <= 0f) {
+            if (dataSet.GetEntriesCount () < 1 /*  || dataSet.PositionDelta () <= 0f */ ) {
                 return new Vector2[0];
             }
 
@@ -308,8 +310,8 @@ namespace AwesomeCharts {
 
             Vector2[] result = new Vector2[dataSet.Entries.Count];
             sortedEntries.ForEach (entry => {
-                float pointX = ((entry.Position - axisBounds.XMin) / positionDelta) * chartSize.x;
-                float pointY = ((entry.Value - axisBounds.YMin) / valueDelta) * chartSize.y;
+                float pointX = positionDelta > 0f?((entry.Position - axisBounds.XMin) / positionDelta) * chartSize.x : 0f;
+                float pointY = valueDelta > 0f?((entry.Value - axisBounds.YMin) / valueDelta) * chartSize.y : 0f;
                 result[index] = new Vector2 (pointX, pointY);
                 index++;
             });
@@ -423,7 +425,7 @@ namespace AwesomeCharts {
 
         private void UpdateValuePopup (LineEntryIdicator indicator) {
             currentValuePopup.transform.localPosition = PopupPositionFromEntry (indicator);
-            currentValuePopup.text.text = "" + indicator.entry.Value;
+            currentValuePopup.text.SetLabelText("" + indicator.entry.Value);
             currentValuePopup.gameObject.SetActive (true);
         }
 

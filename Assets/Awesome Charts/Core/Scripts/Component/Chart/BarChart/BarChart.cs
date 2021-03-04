@@ -95,7 +95,9 @@ namespace AwesomeCharts {
 
         protected override void OnInstantiateViews () {
             base.OnInstantiateViews ();
-            chartDataContainerView.AddComponent<RectMask2D> ();
+            chartDataContainerView.AddComponent<Image> ();
+            var mask = chartDataContainerView.AddComponent<Mask> ();
+            mask.showMaskGraphic = false;
         }
 
         protected override AxisLabelEntryProvider GetVerticalAxisEntriesProvider () {
@@ -204,11 +206,11 @@ namespace AwesomeCharts {
             int nextBarInstanceIndex = 0;
 
             for (int i = 0; i < data.DataSets.Count; i++) {
-                nextBarInstanceIndex = UpdatedBars (i, nextBarInstanceIndex);
+                nextBarInstanceIndex = UpdateBars (i, nextBarInstanceIndex);
             }
         }
 
-        private int UpdatedBars (int dataSetIndex, int nextBarInstanceIndex) {
+        private int UpdateBars (int dataSetIndex, int nextBarInstanceIndex) {
             List<BarEntry> barEntries = positioner.GetVisibleEntries (dataSetIndex);
             for (int i = 0; i < barEntries.Count; i++) {
                 UpdateBarWithEntry (barInstances[nextBarInstanceIndex],
@@ -260,7 +262,7 @@ namespace AwesomeCharts {
 
         private void UpdateValuePopup (BarEntry entry, int dataSetIndex) {
             currentValuePopup.transform.localPosition = positioner.GetValuePopupPosition (entry, dataSetIndex);
-            currentValuePopup.text.text = "" + entry.Value;
+            currentValuePopup.text.SetLabelText("" + entry.Value);
             currentValuePopup.gameObject.SetActive (true);
         }
     }

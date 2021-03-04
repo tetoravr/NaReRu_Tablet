@@ -31,15 +31,12 @@ namespace GoogleSheetsForUnity
             public string datetime;
         }
 
-
         //Create an example object.
         private PlayerInfo _playerData = new PlayerInfo { clinic = "魔法アプリ", patient = "A0017KFX", contents="", time = "", sads = "",datetime="" };
 
         public void sadsstring(string sadsdata)
         {
-            int minutes = Mathf.FloorToInt(ChartController.timer / 60F);
-            int seconds = Mathf.FloorToInt(ChartController.timer - minutes * 60);
-            _playerData.sads += string.Format("{0:00}:{1:00}", minutes, seconds)+" " + sadsdata +" "+memoField.text + "\n";
+            _playerData.sads += ChartController.timer +" "+ sadsdata +" "+ memoField.text + "\n";
         }
         // For the table to be created and queried.
         private string _tableName;
@@ -81,9 +78,7 @@ namespace GoogleSheetsForUnity
             _playerData.contents =SceneSelector.sceneName;
 
             //コンテンツの利用時間を送信
-            int minutes = Mathf.FloorToInt(ChartController.timer / 60F);
-            int seconds = Mathf.FloorToInt(ChartController.timer - minutes * 60);
-            _playerData.time = string.Format("{0:00}:{1:00}", minutes, seconds);
+            _playerData.time = ChartController.timer;
 
             //現在時刻を送信
             TodayNow = DateTime.Now;

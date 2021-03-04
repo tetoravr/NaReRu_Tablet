@@ -40,7 +40,12 @@ namespace AwesomeCharts {
             }
         }
 
-        protected virtual void OnUpdateAxis () { }
+        protected virtual void OnUpdateAxis () {
+            if(verticalAxisLabelRenderer == null)
+                verticalAxisLabelRenderer = InstantiateVerticalAxisLabelRenderer ();
+            if(horizontalAxisLabelRenderer == null)
+                horizontalAxisLabelRenderer = InstantiateHorizontalAxisLabelRenderer ();
+         }
 
         protected override void Awake () {
             base.Awake ();

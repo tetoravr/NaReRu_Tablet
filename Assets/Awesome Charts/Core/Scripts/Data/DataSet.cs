@@ -56,14 +56,16 @@ namespace AwesomeCharts {
             OnEntriesChanged ();
         }
 
-        public void Clear(){
-            entries.Clear();
-            OnEntriesChanged();
+        public void Clear () {
+            entries.Clear ();
+            OnEntriesChanged ();
         }
 
         public float GetMaxValue () {
             if (entries == null || entries.Count == 0)
                 return 0;
+            else if (entries.Count == 1)
+                return Mathf.Max (0f, Entries[0].Value);
 
             List<T> sortedEntries = entries.OrderByDescending (a => a.Value).ToList ();
 
@@ -73,6 +75,8 @@ namespace AwesomeCharts {
         public float GetMinValue () {
             if (entries == null || entries.Count == 0)
                 return 0;
+            else if (entries.Count == 1)
+                return Mathf.Min (0f, Entries[0].Value);
 
             List<T> sortedEntries = entries.OrderBy (a => a.Value).ToList ();
 

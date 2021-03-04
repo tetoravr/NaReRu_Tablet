@@ -59,7 +59,7 @@ namespace AwesomeCharts {
         }
 
         public Vector3 GetBarCenterPosition (int position) {
-            
+
             int dataSetsCount = Mathf.Max (1, data.DataSets.Count);
             float positionFullWidth = calculatedBarWidth * dataSetsCount +
                 barChartConfig.InnerBarSpacing * (dataSetsCount - 1);
@@ -76,7 +76,10 @@ namespace AwesomeCharts {
         }
 
         private float CalculateBarHeight (float value) {
-            return ((value - axisBounds.YMin) / axisBounds.YMax) * GetMaxBarHeight ();
+            if (axisBounds.YMax - axisBounds.YMin == 0f || value == 0f)
+                return 0;
+            else
+                return ((value - axisBounds.YMin) / axisBounds.YMax) * GetMaxBarHeight ();
         }
 
         public Vector3 GetValuePopupPosition (BarEntry entry, int dataSetIndex) {

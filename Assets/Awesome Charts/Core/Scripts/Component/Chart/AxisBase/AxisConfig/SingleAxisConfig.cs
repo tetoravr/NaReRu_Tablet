@@ -9,7 +9,7 @@ namespace AwesomeCharts {
         [SerializeField]
         private AxisValue bounds = new AxisValue ();
         [SerializeField]
-        private AxisLabel axisLabelPrefab;
+        private ChartLabel axisLabelPrefab;
 
         public AxisLabelConfig LabelsConfig {
             get { return labelsConfig; }
@@ -21,7 +21,7 @@ namespace AwesomeCharts {
             set { bounds = value; }
         }
 
-        public AxisLabel AxisLabelPrefab {
+        public ChartLabel AxisLabelPrefab {
             get { return axisLabelPrefab; }
             set { axisLabelPrefab = value; }
         }

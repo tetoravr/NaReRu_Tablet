@@ -19,6 +19,8 @@ namespace AwesomeCharts {
             VERTICAL
         }
 
+        public LegendEntryView entryViewPrefab;
+
         [SerializeField]
         private int iconSize = 15;
         [SerializeField]
@@ -29,8 +31,6 @@ namespace AwesomeCharts {
         private int textSize = 17;
         [SerializeField]
         private Color textColor = Color.white;
-        [SerializeField]
-        private Font textFont;
         [SerializeField]
         private int itemWidth = 200;
         [SerializeField]
@@ -112,14 +112,6 @@ namespace AwesomeCharts {
             }
         }
 
-        public Font TextFont {
-            get { return textFont; }
-            set {
-                textFont = value;
-                SetDirty();
-            }
-        }
-
         public LEGEND_ALIGNMENT Alignment {
             get { return alignment; }
             set {
@@ -163,8 +155,6 @@ namespace AwesomeCharts {
         }
 
         private void OnValidate() {
-            //DrawLegendEntries();
-            //isDirty = false;
             isDirty = true;
         }
 
@@ -185,18 +175,9 @@ namespace AwesomeCharts {
 
         private void ClearEditModeObjects() {
             int children = transform.childCount;
-
-            try
-            {
-                for (int i = 0; i < children; i++)
-                {
-                    DestroyImmediate(transform.GetChild(0).gameObject);
-                }
+            for (int i = 0; i < children; i++) {
+                DestroyImmediate(transform.GetChild(0).gameObject);
             }
-            catch {
-                
-            }
-
             legendEntryViews.Clear();
         }
 
@@ -220,7 +201,7 @@ namespace AwesomeCharts {
         }
 
         private LegendEntryView InstantiateLegendEntryView() {
-            return viewCreator.InstantiateLegendEntry(transform, PivotValue.BOTTOM_LEFT);
+            return viewCreator.InstantiateLegendEntry(entryViewPrefab, transform, PivotValue.BOTTOM_LEFT);
         }
 
         private void HideAllChildrenInInspector() {
@@ -236,11 +217,9 @@ namespace AwesomeCharts {
             viewTransform.anchorMin = AnchorsFromAlignment(alignment);
             viewTransform.anchorMax = AnchorsFromAlignment(alignment);
             viewTransform.anchoredPosition = CalculateLegendEntryPosition(index);
-            view.nameText.text = entry.Title;
-            view.nameText.fontSize = TextSize;
-            view.nameText.color = TextColor;
-            if (TextFont != null)
-                view.nameText.font = TextFont;
+            view.nameLabel.SetLabelText(entry.Title);
+            view.nameLabel.SetLabelTextSize(TextSize);
+            view.nameLabel.SetLabelColor(TextColor);
             view.iconImage.color = entry.Color;
             view.iconImage.sprite = IconImage;
             view.IconSize = IconSize;
