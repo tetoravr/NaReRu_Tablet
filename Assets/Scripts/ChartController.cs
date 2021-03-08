@@ -24,7 +24,7 @@ namespace AwesomeCharts {
         private void Start () {
             // Configure line
             set.LineColor = Color.white;
-            set.FillColor = new Color(0.0f, 0.7f, 0.95f, 0.7f);
+            set.FillColor = new Color(0.95f, 0.0f, 0.3f, 0.7f);
             set.FillTexture = fillTexture;
             set.LineThickness = 10;
             // Add data set to chart data

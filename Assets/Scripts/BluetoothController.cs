@@ -20,7 +20,6 @@ public class BluetoothController : MonoBehaviour
     private float span = 10.0f;
     private float currentTime = 0f;
 
-    public VideoPlayer[] videoPlayer;
     public Camera camerarot;
     string[] camRot;
     float cameraRotx;
@@ -99,6 +98,12 @@ public class BluetoothController : MonoBehaviour
     public void Initialize()
     {
         BluetoothForAndroid.Initialize();
+    }
+
+    public void bluetoothReset()
+    {
+        BluetoothForAndroid.Initialize();
+        ConnectToServer();
     }
 
     // ブルートゥースを制御し、その状態を取得する
