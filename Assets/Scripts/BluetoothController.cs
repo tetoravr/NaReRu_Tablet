@@ -51,7 +51,6 @@ public class BluetoothController : MonoBehaviour
         GetBluetoothStatus();
             currentTime = 0f;
         }
-
     }
 
 
@@ -62,7 +61,6 @@ public class BluetoothController : MonoBehaviour
         BluetoothForAndroid.ReceivedFloatMessage += PrintVal2;
         BluetoothForAndroid.ReceivedStringMessage += PrintVal3;
         BluetoothForAndroid.ReceivedByteMessage += PrintVal4;
-
 
         BluetoothForAndroid.BtAdapterEnabled += PrintEvent1;
         BluetoothForAndroid.BtAdapterDisabled += PrintEvent2;
@@ -174,22 +172,9 @@ public class BluetoothController : MonoBehaviour
     }
 
     // methods for sending messages of various types
-    public void WriteMessage1()
+    public void ControlVideo(int num)
     {
-        BluetoothForAndroid.WriteMessage(1);
-    }
-    public void WriteMessage2()
-    {
-        BluetoothForAndroid.WriteMessage(2);
-
-    }
-    public void WriteMessage3()
-    {
-        BluetoothForAndroid.WriteMessage(3);
-    }
-    public void WriteMessage4()
-    {
-        BluetoothForAndroid.WriteMessage(4);
+        BluetoothForAndroid.WriteMessage(num);
     }
 
     // 受信メッセージ表示手段
@@ -199,6 +184,8 @@ public class BluetoothController : MonoBehaviour
     {
         VRImage.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = val.ToString() + "%";
     }
+
+    //カメラ回転タブレットへ送信
     void PrintVal3(string val)
     {
         camRot = val.Split(',');

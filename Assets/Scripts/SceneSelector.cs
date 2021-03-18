@@ -82,4 +82,13 @@ public class SceneSelector : MonoBehaviour
     {
         Debug.Log(sceneName + "の動画を再生");
     }
+    public void videoPlay()
+    {
+        videoPlayer.Play();
+    }
+
+    public void videoStop()
+    {
+        videoPlayer.Stop();
+    }
 }
